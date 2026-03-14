@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tienda Zyrox</title>
+<style>
+body{
+  font-family:Arial;
+  margin:0;
+  background:#0f0f0f;
+  color:white;
+}
+
+/* NAVBAR */
+.navbar{
+  background:black;
+  padding:15px 40px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+}
+.logo-area{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.logo{
+  width:170px;
+  height:90px;
+}
+.logo-area h1{
+  margin:0;
+  font-size:38px;
+}
+.menu{
+  display:flex;
+  gap:40px;
+  flex-wrap:wrap;
+}
+
+#searchInput{
+padding:8px 12px;
+border-radius:6px;
+border:none;
+outline:none;
+font-size:14px;
+}
+
+
+.menu a{
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+  cursor:pointer;
+}
+.menu a:hover{
+  color:#ff3c3c;
+}
+
+/* HERO */
+.hero{
+  position:relative;
+  width:100%;
+  height:500px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.hero img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.hero-text{
+  position:absolute;
+  font-size:45px;
+  font-weight:bold;
+  text-shadow:0 0 10px black;
+  text-align:center;
+  padding:0 10px;
+}
+
+/* CONTENEDOR */
+.container{
+  padding:40px 20px;
+}
+.section-title{
+  font-size:28px;
+  margin-bottom:20px;
+}
+
+/* PRODUCTOS */
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:20px;
+}
+.product{
+  background:#000;
+  border-radius:12px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.45);
+  text-align:center;
+  transition:0.35s;
+  cursor:pointer;
+  position:relative;
+  transition:0.3s;
+}
+.product:hover{
+  transform:translateY(-8px) scale(1.03);
+  box-shadow:0 15px 35px rgba(0,0,0,0.6);
+}
+
+.product:hover{
+transform:scale(1.05);
+}
+
+
+.product img{
+  width:100%;
+  height:220px;
+  object-fit:contain;
+  background:#000;
+  display:block;
+  border-radius:12px;
+  padding:10px;
+}
+.product h3{
+  margin:10px 0 5px 0;
+  font-size:16px;
+}
+.product p{
+  color:#ccc;
+  margin:0 0 10px 0;
+}
+.product button{
+  background:#ff2e63;
+  border:none;
+  padding:12px;
+  margin-bottom:12px;
+  color:white;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+  font-size:14px;
+  transition:0.25s;
+}
+.product button:hover{
+  background:#ff1744;
+  transform:scale(1.05);
+}
+
+/* ESTRELLAS DE CALIFICACION */
+.stars{
+  color:#555;
+  font-size:20px;
+  margin-bottom:10px;
+}
+
+.stars span{
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.stars span:hover{
+  transform:scale(1.2);
+}
+
+/* ANIMACION AGREGADO */
+.added{
+  animation:addedEffect 0.6s ease;
+}
+@keyframes addedEffect{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.08);}
+  100%{transform:scale(1);}
+}
+
+/* MENSAJE */
+.cart-message{
+  position:fixed;
+  top:20px;
+  right:20px;
+  background:#ff2e63;
+  color:white;
+  padding:12px 20px;
+  border-radius:6px;
+  font-weight:bold;
+  opacity:0;
+  transform:translateY(-20px);
+  transition:0.4s;
+  z-index:2000;
+}
+.cart-message.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* OVERLAY */
+#overlay{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.8);
+  display:none;
+  z-index:998;
+}
+#overlay.active{
+  display:block;
+}
+
+/* CARRITO */
+.cart{
+  position:fixed;
+  right:-100%;
+  top:0;
+  width:340px;
+  height:100vh;
+  background:#1b1b1b;
+  padding:25px;
+  transition:0.4s;
+  z-index:999;
+  overflow:auto;
+  box-shadow:-5px 0 20px rgba(0,0,0,0.8);
+}
+.cart.active{
+  right:0;
+}
+.cart h2{
+  margin-top:0;
+  border-bottom:1px solid #333;
+  padding-bottom:10px;
+}
+.close-cart{
+  width:100%;
+  background:#ff2e63;
+  color:white;
+  border:none;
+  padding:12px;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:bold;
+  margin-bottom:15px;
+}
+.cart-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border-bottom:1px solid #333;
+  padding:12px 0;
+}
+.cart-item img{
+  width:50px;
+  height:50px;
+  object-fit:contain;
+  background:black;
+  border-radius:6px;
+}
+.cart-item button{
+  background:#ff0000;
+  border:none;
+  color:white;
+  padding:4px 8px;
+  border-radius:4px;
+  cursor:pointer;
+  margin-left:auto;
+}
+.cart-item .quantity-controls{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  margin-left:10px;
+}
+.cart-item .quantity-controls button{
+  background:#555;
+  color:white;
+  border:none;
+  padding:2px 6px;
+  border-radius:4px;
+  cursor:pointer;
+}
+.cart-item .quantity-controls span{
+  min-width:20px;
+  display:inline-block;
+  text-align:center;
+}
+.total{
+  font-weight:bold;
+  margin-top:20px;
+  font-size:18px;
+}
+.pay-btn{
+  width:100%;
+  background:#00c853;
+  color:white;
+  border:none;
+  padding:14px;
+  margin-top:20px;
+  font-size:16px;
+  border-radius:6px;
+  cursor:pointer;
+  font-weight:bold;
+}
+.pay-btn:hover{
+  background:#00a844;
+}
+
+/* FOOTER */
+footer{
+  background:#111;
+  text-align:center;
+  padding:20px;
+  margin-top:40px;
+}
+footer h2{
+  margin:0;
+  color:#ff2e63;
+}
+.footer-links{
+  margin-top:10px;
+  line-height:1.8;
+  font-size:14px;
+  color:#ccc;
+}
+
+/* IMAGEN VOLANDO */
+#fly-img{
+  position:absolute;
+  width:50px;
+  height:50px;
+  pointer-events:none;
+  z-index:5000;
+  background-size:contain;
+  background-repeat:no-repeat;
+  border-radius:12px;
+}
+
+/* MODAL PAGO UNIFORME */
+#paymentModal{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  background:#1b1b1b;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 0 20px rgba(0,0,0,0.8);
+  z-index:5001;
+  width:320px;
+  display:none;
+  color:white;
+}
+#paymentModal h3{
+  margin-top:0;
+  color:#ff2e63;
+  text-align:center;
+}
+#paymentModal label{
+  display:block;
+  margin-top:10px;
+  font-size:14px;
+}
+#paymentModal input, 
+#paymentModal select, 
+#paymentModal button{
+  width:100%;
+  padding:10px;
+  margin-top:8px;
+  border-radius:6px;
+  border:none;
+  box-sizing:border-box;
+  font-size:14px;
+}
+#paymentModal button{
+  background:#00c853;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+  transition:0.25s;
+}
+#paymentModal button:hover{
+  background:#00a844;
+}
+
+/* RESPONSIVE CELULAR */
+@media (max-width:480px){
+
+  .navbar{
+flex-direction:column;
+align-items:flex-start;
+gap:10px;
+}
+
+.menu{
+width:100%;
+justify-content:space-between;
+}
+
+#searchInput{
+width:100%;
+}
+
+.logo{
+width:120px;
+height:auto;
+}
+
+.hero-text{
+font-size:24px;
+}
+
+
+  .hero{
+    height:300px;
+  }
+  .hero-text{
+    font-size:28px;
+  }
+  .menu{
+    gap:10px;
+  }
+  .product img{
+width:100%;
+height:220px;
+object-fit:contain;
+}
+
+  .product h3{
+    font-size:14px;
+  }
+  .product button{
+    font-size:13px;
+    padding:10px;
+  }
+  .cart{
+    width:90%;
+    padding:15px;
+  }
+  #paymentModal{
+    width:90%;
+    padding:15px;
+  }
+  #paymentModal input,#paymentModal select,#paymentModal button{
+    font-size:13px;
+    padding:8px;
+  }
+}
+
+/* ETIQUETAS DE PRODUCTOS */
+.badge{
+position:absolute;
+top:10px;
+left:10px;
+padding:6px 10px;
+font-size:12px;
+font-weight:bold;
+border-radius:6px;
+color:white;
+z-index:5;
+}
+
+.badge.nuevo{
+background:#00c853;
+}
+
+.badge.masvendido{
+background:#ff9800;
+}
+
+.badge.oferta{
+background:#ff3c3c;
+}
+
+/* MODAL CONFIRMACION DE COMPRA */
+#successModal{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:#1b1b1b;
+padding:30px;
+border-radius:12px;
+box-shadow:0 0 20px rgba(0,0,0,0.8);
+z-index:6000;
+width:320px;
+text-align:center;
+display:none;
+animation:popIn 0.4s ease;
+}
+
+#successModal h3{
+color:#00c853;
+margin-top:0;
+font-size:24px;
+}
+
+#successModal p{
+color:#ccc;
+margin:10px 0;
+}
+
+#successModal button{
+background:#ff3c3c;
+border:none;
+padding:10px 20px;
+color:white;
+border-radius:6px;
+cursor:pointer;
+margin-top:15px;
+font-weight:bold;
+}
+
+#successModal button:hover{
+background:#ff0000;
+}
+
+@keyframes popIn{
+0%{transform:translate(-50%,-60%) scale(0.8);opacity:0;}
+100%{transform:translate(-50%,-50%) scale(1);opacity:1;}
+}
+
+</style>
+</head>
+<body>
+
+<div class="cart-message" id="cartMessage">
+Producto añadido al carrito 🛒
+</div>
+
+<header class="navbar">
+<div class="logo-area">
+<img src="logo-negro.png" class="logo">
+<h1>Zyrox</h1>
+</div>
+<nav class="menu">
+
+  <input type="text" id="searchInput" placeholder="🔎 Buscar zapatos..." onkeyup="delaySearch()">
+
+
+<a href="#hombre">Hombre</a>
+<a href="#mujer">Mujer</a>
+<a href="#ninos">Niños</a>
+<a onclick="toggleCart()">🛒 Carrito (<span id="cartCount">0</span>)</a>
+</nav>
+</header>
+
+<div class="hero">
+<img src="hero.jpg">
+<div class="hero-text">Encuentra tu estilo</div>
+</div>
+
+<div id="overlay" onclick="toggleCart()"></div>
+<div id="fly-img"></div>
+
+<div class="cart" id="cart">
+<h2>🛒 Tu carrito</h2>
+<button class="close-cart" onclick="toggleCart()">Cerrar carrito</button>
+<div id="cartItems"></div>
+<div class="total">
+Total: $<span id="total">0</span>
+</div>
+<button class="pay-btn" onclick="showPaymentModal()">Pagar</button>
+<button class="pay-btn" style="background:#25D366;margin-top:10px;" onclick="buyWhatsApp()">Comprar por WhatsApp</button>
+</div>
+
+<!-- MODAL PAGO -->
+<div id="paymentModal">
+<h3>Pago de Compra</h3>
+<div id="modalCartItems"></div>
+<p>Total: $<span id="modalTotal">0</span></p>
+
+<label>Método de pago:</label>
+<select id="paymentMethod">
+<option value="tarjeta">Tarjeta</option>
+<option value="paypal">PayPal</option>
+<option value="efectivo">Efectivo</option>
+</select>
+
+<div id="paymentFields" style="margin-top:10px;"></div>
+
+<button onclick="confirmPayment()">Confirmar Pago</button>
+</div>
+
+<div class="container">
+<!-- Productos Hombre -->
+<h2 id="hombre" class="section-title">Zapatos Hombre</h2>
+<div class="products">
+<div class="product">
+<img src="1.jpeg">
+<h3>Air Force</h3>
+<p>$130</p>
+
+<div class="stars">
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+</div>
+
+
+<button onclick="addToCart(event,'Air Force',130,'1.jpeg')">Agregar</button>
+</div>
+<div class="product">
+<img src="2.jpg">
+<h3>Zyrox Air Max</h3>
+<p>$110</p>
+
+<div class="stars">
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+</div>
+
+
+<button onclick="addToCart(event,'Zyrox Air Max',110,'2.jpg')">Agregar</button>
+</div>
+<div class="product">
+<img src="3.jpg">
+<h3>Zyrox Journey</h3>
+<p>$90</p>
+
+<div class="stars">
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+</div>
+
+
+<button onclick="addToCart(event,'Zyrox Journey',90,'3.jpg')">Agregar</button>
+</div>
+</div>
+
+<!-- Productos Mujer -->
+<h2 id="mujer" class="section-title">Zapatos Mujer</h2>
+<div class="products">
+<div class="product">
+<img src="4.jpg">
+<h3>Tenis Pink</h3>
+<p>$75</p>
+
+<div class="stars">
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+</div>
+
+
+<button onclick="addToCart(event,'Tenis Pink',75,'4.jpg')">Agregar</button>
+</div>
+<div class="product">
+<img src="5.jpeg">
+<h3>Zyrox Nova</h3>
+<p>$60</p>
+
+<div class="stars">
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+</div>
+
+
+<button onclick="addToCart(event,'Zyrox Nova',60,'5.jpeg')">Agregar</button>
+</div>
+<div class="product">
+<img src="6.jpeg">
+<h3>Zyrox Beige</h3>
+<p>$70</p>
+
+<div class="stars">
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+</div>
+
+
+<button onclick="addToCart(event,'Zyrox Beige',70,'6.jpeg')">Agregar</button>
+</div>
+</div>
+
+<!-- Productos Niños -->
+<h2 id="ninos" class="section-title">Zapatos Niños</h2>
+<div class="products">
+<div class="product">
+<img src="7.jpeg">
+<h3>Zyrox Mini</h3>
+<p>$45</p>
+
+<div class="stars">
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+</div>
+
+
+<button onclick="addToCart(event,'Zyrox Mini',45,'7.jpeg')">Agregar</button>
+</div>
+<div class="product">
+<img src="8.jpeg">
+<h3>Zyrox Kids Pink</h3>
+<p>$60</p>
+
+<div class="stars">
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+</div>
+
+
+<button onclick="addToCart(event,'Zyrox Kids Pink',60,'8.jpeg')">Agregar</button>
+</div>
+<div class="product">
+<img src="9.jpeg">
+<h3>Zyrox Escolar</h3>
+<p>$50</p>
+
+<div class="stars">
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+<span onclick="rate(this)">★</span>
+</div>
+
+
+<button onclick="addToCart(event,'Zyrox Escolar',50,'9.jpeg')">Agregar</button>
+</div>
+</div>
+</div>
+
+<footer>
+<h2>Zyrox</h2>
+<p>Tu tienda de zapatos favorita</p>
+<div class="footer-links">
+<p>📍 Dirección: Calle 123 #45-67, Cucuta, Colombia</p>
+<p>📞 Contacto: +57 320 385 2595</p>
+<p>📸 Instagram: @zyrox</p>
+<p>💬 WhatsApp: +57 320 385 2595</p>
+</div>
+<p style="margin-top:10px;">© 2026 Zyrox - Todos los derechos reservados</p>
+</footer>
+
+<!-- CONFIRMACION DE COMPRA -->
+<div id="successModal">
+
+<h3>✅ Compra Exitosa</h3>
+
+<p>Tu pedido fue realizado correctamente.</p>
+
+<p>Gracias por comprar en <b>Zyrox</b>.</p>
+
+<button onclick="closeSuccess()">Aceptar</button>
+
+</div>
+
+<script>
+let cart=[];
+let total=0;
+
+function toggleCart(){
+  document.getElementById("cart").classList.toggle("active");
+  document.getElementById("overlay").classList.toggle("active");
+}
+
+function addToCart(e,name,price,image){
+  window.scrollTo({top:0, behavior:'smooth'});
+  let flyImg = document.getElementById("fly-img")
+  flyImg.style.backgroundImage = `url(${image})`
+  flyImg.style.opacity = 1
+  let rect = e.target.closest(".product").getBoundingClientRect()
+  flyImg.style.width = rect.width + 'px'
+  flyImg.style.height = rect.height + 'px'
+  flyImg.style.left = rect.left + 'px'
+  flyImg.style.top = rect.top + 'px'
+  flyImg.style.transform = 'none'
+  let cartIcon = document.querySelector(".menu a:last-child")
+  let cartRect = cartIcon.getBoundingClientRect()
+  let deltaX = cartRect.left - rect.left
+  let deltaY = cartRect.top - rect.top
+  let anim = flyImg.animate([
+    { transform: 'translate(0,0) scale(1)', offset:0 },
+    { transform: `translate(${deltaX/2}px, ${deltaY/2 - 100}px) scale(0.8)`, offset:0.5 },
+    { transform: `translate(${deltaX}px, ${deltaY}px) scale(0.2)`, offset:1 }
+  ], { duration: 1200, easing: 'cubic-bezier(.5,-0.5,.5,1.5)' });
+  anim.onfinish = () => {
+    flyImg.style.opacity = 0;
+    document.getElementById("cart").classList.add("active");
+    document.getElementById("overlay").classList.add("active");
+  }
+  let found = cart.find(item=>item.name===name)
+  if(found){found.quantity++}
+  else{cart.push({name,price,image,quantity:1})}
+  updateCart()
+  let product=e.target.closest(".product")
+  product.classList.add("added")
+  setTimeout(()=>{ product.classList.remove("added") },600)
+  let message=document.getElementById("cartMessage")
+  message.classList.add("show")
+  setTimeout(()=>{ message.classList.remove("show") },2000)
+}
+
+function updateCart(){
+  let cartItems=document.getElementById("cartItems")
+  cartItems.innerHTML=""
+  total = 0
+  cart.forEach((item,index)=>{
+    total += item.price * item.quantity
+    cartItems.innerHTML+=`
+    <div class="cart-item">
+      <img src="${item.image}">
+      <div>
+        <div>${item.name}</div>
+        <div>$${item.price}</div>
+        <div class="quantity-controls">
+          <button onclick="changeQuantity(${index}, -1)">-</button>
+          <span>${item.quantity}</span>
+          <button onclick="changeQuantity(${index}, 1)">+</button>
+        </div>
+      </div>
+      <button onclick="removeFromCart(${index})">Eliminar</button>
+    </div>
+    `
+  })
+  document.getElementById("total").innerText=total
+  document.getElementById("cartCount").innerText=cart.reduce((sum,i)=>sum+i.quantity,0)
+}
+
+function changeQuantity(index, delta){
+  cart[index].quantity += delta
+  if(cart[index].quantity <= 0) cart.splice(index,1)
+  updateCart()
+}
+
+function removeFromCart(index){
+  cart.splice(index,1)
+  updateCart()
+}
+
+function showPaymentModal(){
+  if(cart.length===0){ alert("Tu carrito está vacío"); return; }
+  document.getElementById("paymentModal").style.display="block";
+
+  let modalItems = document.getElementById("modalCartItems");
+  modalItems.innerHTML = "";
+  cart.forEach(item=>{
+    modalItems.innerHTML += `<p>${item.name} x${item.quantity} - $${item.price*item.quantity}</p>`;
+  });
+  document.getElementById("modalTotal").innerText = total;
+
+  updatePaymentFields();
+}
+
+document.getElementById("paymentMethod").addEventListener("change", updatePaymentFields);
+
+function updatePaymentFields(){
+  let method = document.getElementById("paymentMethod").value;
+  let container = document.getElementById("paymentFields");
+  container.innerHTML = "";
+
+  if(method === "tarjeta"){
+    container.innerHTML += '<input type="text" placeholder="Número de tarjeta">';
+    container.innerHTML += '<input type="text" placeholder="Fecha de vencimiento">';
+    container.innerHTML += '<input type="text" placeholder="CVV">';
+  } else if(method === "paypal"){
+    container.innerHTML += '<input type="email" placeholder="Correo PayPal">';
+  } else if(method === "efectivo"){
+    container.innerHTML += '<p>Pago en efectivo al recibir el producto.</p>';
+  }
+}
+
+
+
+// Cerrar modal si se hace clic fuera
+// Cerrar modal si se hace clic fuera
+window.addEventListener("click", function(e){
+  let modal = document.getElementById("paymentModal");
+  if(e.target === modal){
+    modal.style.display = "none";
+  }
+});
+
+// Confirmar pago
+function confirmPayment(){
+
+  let method = document.getElementById("paymentMethod").value;
+  let inputs = document.querySelectorAll("#paymentFields input");
+
+  if(method !== "efectivo"){
+
+    for(let i = 0; i < inputs.length; i++){
+
+      if(inputs[i].value.trim() === ""){
+        alert("Debes llenar todos los campos de pago");
+        inputs[i].focus();
+        return;
+      }
+
+    }
+
+  }
+
+  document.getElementById("successModal").style.display="block";
+
+  cart=[];
+  updateCart();
+
+  document.getElementById("paymentModal").style.display="none";
+  document.getElementById("cart").classList.remove("active");
+  document.getElementById("overlay").classList.remove("active");
+
+}
+
+function rate(star){
+
+let stars = star.parentElement.children
+let index = Array.from(stars).indexOf(star)
+
+for(let i=0;i<stars.length;i++){
+
+if(i<=index){
+stars[i].style.color="gold"
+}else{
+stars[i].style.color="#555"
+}
+
+}
+
+}
+function buyWhatsApp(){
+
+if(cart.length===0){
+alert("Tu carrito está vacío");
+return;
+}
+
+let phone = "573203852595";
+
+let message = "Hola, quiero comprar estos productos:%0A%0A";
+
+cart.forEach(item=>{
+message += `${item.name} x${item.quantity} - $${item.price * item.quantity}%0A`;
+});
+
+message += `%0ATotal: $${total}`;
+
+let url = `https://wa.me/${phone}?text=${message}`;
+
+window.open(url, "_blank");
+
+}
+
+function closeSuccess(){
+document.getElementById("successModal").style.display="none";
+}
+
+let searchTimeout;
+
+function delaySearch(){
+
+clearTimeout(searchTimeout);
+
+searchTimeout = setTimeout(function(){
+
+searchProducts();
+
+}, 700);
+
+}
+
+function searchProducts(){
+  
+
+let input = document.getElementById("searchInput").value.toLowerCase();
+
+let products = document.querySelectorAll(".product");
+
+let firstResult = null;
+
+products.forEach(product => {
+
+let name = product.querySelector("h3").innerText.toLowerCase();
+
+
+
+if(name.includes(input)){
+
+product.style.display = "block";
+
+if(!firstResult){
+firstResult = product;
+}
+
+}else{
+
+product.style.display = "none";
+
+}
+
+});
+
+if(firstResult){
+firstResult.scrollIntoView({behavior:"smooth"});
+}
+
+}
+
+</script>
+
+</body>
+</html>
